@@ -1,0 +1,33 @@
+{
+  "name": "b7a2-devpulse",
+  "version": "1.0.0",
+  "description": "Internal Tech Issue &amp; Feature Tracker -- A collaborative platform for software teams to report bugs, suggest features, and coordinate resolutions.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JahidulSany/B7A2-DevPulse.git"
+  },
+  "keywords": [],
+  "author": "Jahidul Sany",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JahidulSany/B7A2-DevPulse/issues"
+  },
+  "homepage": "https://github.com/JahidulSany/B7A2-DevPulse#readme",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.9.1",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3"
+  }
+}
