@@ -1,4 +1,9 @@
-import express, { urlencoded, type Application } from 'express';
+import express, {
+  urlencoded,
+  type Application,
+  type Request,
+  type Response,
+} from 'express';
 import cors from 'cors';
 
 const app: Application = express();
@@ -11,10 +16,15 @@ app.use(
   }),
 );
 
-app.get('/', (req, res) => {
-  res.send(
-    '<h1>Welcome to Devpulse, an internal Tech Issue & Feature Tracker</h1>',
-  );
+// Root Route
+app.get('/', (req: Request, res: Response) => {
+  res
+    .status(200)
+    .send(
+      '<h1>Welcome to Devpulse, an internal Tech Issue & Feature Tracker</h1>',
+    );
 });
+
+
 
 export default app;
