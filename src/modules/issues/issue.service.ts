@@ -1,16 +1,17 @@
+import type { JwtPayload } from 'jsonwebtoken';
 import { pool } from '../../db';
 import type { IIssue } from './issue.interface';
 
-const createIssueIntoDB = async (payload: IIssue) => {
+const createIssueIntoDB = async (payload: IIssue, id: string) => {
   const { title, description, type } = payload;
 
   const result = await pool.query(
     `
-    INSERT INTO issues (title, description, type)
-    VALUES ($1, $2, $3)
+    INSERT INTO issues (title, description, type, reporter_id)
+    VALUES ($1, $2, $3, $4)
     RETURNING *;
     `,
-    [title, description, type],
+    [title, description, type, id],
   );
 
   return result.rows[0];
