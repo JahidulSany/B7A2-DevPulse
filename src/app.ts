@@ -6,6 +6,7 @@ import express, {
 } from 'express';
 import cors from 'cors';
 import { authRoute } from './modules/auth/auth.route';
+import { issueRoute } from './modules/issues/issue.route';
 
 const app: Application = express();
 
@@ -28,5 +29,8 @@ app.get('/', (req: Request, res: Response) => {
 
 // Auth Route
 app.use('/api/auth', authRoute);
+
+// Issue Route
+app.use('/api/issues', issueRoute)
 
 export default app;

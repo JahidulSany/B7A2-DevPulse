@@ -23,7 +23,7 @@ const userSignup = async (req: Request, res: Response) => {
 
 const userLogin = async (req: Request, res: Response) => {
   try {
-    const result = await authService.userLoginIntoDB(req.body);
+    const result = await authService.userLoginFromDB(req.body);
     sendResponse(res, {
       statusCode: 200,
       success: true,

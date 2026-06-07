@@ -22,7 +22,7 @@ const createUserAuthIntoDB = async (payload: IAuthUser) => {
   return result;
 };
 
-const userLoginIntoDB = async (payload: IUserLogin) => {
+const userLoginFromDB = async (payload: IUserLogin) => {
   // Checking If User Exists
   const { email, password } = payload;
 
@@ -37,6 +37,7 @@ const userLoginIntoDB = async (payload: IUserLogin) => {
   const user = userData.rows[0];
 
   const matchedPassword = await bcrypt.compare(password, user.password);
+
   if (!matchedPassword) {
     throw new Error('Invalid Credentials');
   }
@@ -44,7 +45,6 @@ const userLoginIntoDB = async (payload: IUserLogin) => {
   const jwtPayload = {
     id: user.id,
     name: user.name,
-    email: user.email,
     role: user.role,
   };
 
@@ -58,5 +58,5 @@ const userLoginIntoDB = async (payload: IUserLogin) => {
 
 export const authService = {
   createUserAuthIntoDB,
-  userLoginIntoDB,
+  userLoginFromDB,
 };

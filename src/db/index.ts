@@ -24,15 +24,15 @@ export const initDB = async () => {
         id SERIAL PRIMARY KEY,
         title VARCHAR(150) NOT NULL, 
         description TEXT NOT NULL CHECK (char_length(description) >= 20),
-        type TEXT CHECK (type IN ('bug', 'feature_request')), 
-        status VARCHAR(20) DEFAULT 'open' CHECK (type IN ('open', 'in_progress', 'resolved')), 
+        type TEXT NOT NULL CHECK (type IN ('bug', 'feature_request')), 
+        status VARCHAR(20) DEFAULT 'open' CHECK (status IN ('open', 'in_progress', 'resolved')), 
         
         reporter_id INT UNIQUE REFERENCES users(id) ON DELETE CASCADE,
 
         created_at TIMESTAMP DEFAULT NOW(),
         updated_at TIMESTAMP DEFAULT NOW()
       )`);
-    
+
     console.log(`Database connected successfully`);
   } catch (error) {
     console.error(error);
