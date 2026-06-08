@@ -2,6 +2,7 @@ import type { Request, Response } from 'express';
 import { issueService } from './issue.service';
 import sendResponse from '../../utils/sendResponse';
 import type { JwtPayload } from 'jsonwebtoken';
+import type { IQueryParams } from './issue.interface';
 
 const createIssue = async (req: Request, res: Response) => {
   // console.log(req.user);
@@ -12,7 +13,7 @@ const createIssue = async (req: Request, res: Response) => {
       statusCode: 201,
       success: true,
       message: 'Issue Created successfully',
-      data: result,
+      data: result.rows[0],
     });
   } catch (error: any) {
     sendResponse(res, {
@@ -25,22 +26,29 @@ const createIssue = async (req: Request, res: Response) => {
 };
 
 const getAllIssues = async (req: Request, res: Response) => {
+  const sort = (req.query.sort as string) || 'newest';
+  const type = req.query.type as string;
+  const status = req.query.status as string;
   try {
-    const result = await issueService.getAllIssuesFromDB(req.body);
+    const result = await issueService.getAllIssuesFromDB({
+      sort,
+      type,
+      status,
+    });
 
-    // if (result.rows.length === 0) {
-    //   sendResponse(res, {
-    //     statusCode: 404,
-    //     success: false,
-    //     message: 'User not found',
-    //     data: {},
-    //   });
-    // }
+    if (result.length === 0) {
+      sendResponse(res, {
+        statusCode: 404,
+        success: false,
+        message: 'No issues found',
+        data: {},
+      });
+    }
 
     sendResponse(res, {
       statusCode: 200,
       success: true,
-      message: 'All Issues retrieved successfully',
+      message: 'All issues retrieved successfully',
       data: result,
     });
   } catch (error: any) {

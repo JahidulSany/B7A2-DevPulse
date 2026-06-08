@@ -4,3 +4,9 @@ export interface IIssue {
   type: 'bug' | 'feature_request';
   status?: 'open' | 'in_progress' | 'resolved';
 }
+
+export interface IQueryParams {
+  sort: string;
+  type: string;
+  status: string;
+}
