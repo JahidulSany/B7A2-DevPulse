@@ -77,7 +77,10 @@ const getAllIssuesFromDB = async (payload: IQueryParams) => {
   return filteredIssues;
 };
 
-const getSignleIssueFromDB = async (payload: any) => {};
+const getSignleIssueFromDB = async (id: string) => {
+  const result = await pool.query(`SELECT * FROM issues WHERE id = $1`, [id]);
+  return result;
+};
 
 const updateIssueFromDB = async (payload: any) => {};
 

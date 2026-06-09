@@ -61,23 +61,24 @@ const getAllIssues = async (req: Request, res: Response) => {
 };
 
 const getSingleIssue = async (req: Request, res: Response) => {
+  const { id } = req.params;
   try {
-    const result = await issueService.getSignleIssueFromDB(req.body);
+    const result = await issueService.getSignleIssueFromDB(id as string);
 
-    // if (result.rows.length === 0) {
-    //   sendResponse(res, {
-    //     statusCode: 404,
-    //     success: false,
-    //     message: 'User not found',
-    //     data: {},
-    //   });
-    // }
+    if (result.rows.length === 0) {
+      sendResponse(res, {
+        statusCode: 404,
+        success: false,
+        message: 'No issues found',
+        data: {},
+      });
+    }
 
     sendResponse(res, {
       statusCode: 200,
       success: true,
       message: 'Issue retrieved successfully',
-      data: result,
+      data: result.rows[0],
     });
   } catch (error: any) {
     sendResponse(res, {
@@ -97,7 +98,7 @@ const updateIssue = async (req: Request, res: Response) => {
     //   sendResponse(res, {
     //     statusCode: 404,
     //     success: false,
-    //     message: 'User not found',
+    //     message: 'No issues found',
     //     data: {},
     //   });
     // }
@@ -126,7 +127,7 @@ const deleteIssue = async (req: Request, res: Response) => {
     //   sendResponse(res, {
     //     statusCode: 404,
     //     success: false,
-    //     message: 'User not found',
+    //     message: 'No issues found',
     //     data: {},
     //   });
     // }
