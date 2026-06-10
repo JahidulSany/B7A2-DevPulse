@@ -65,7 +65,7 @@ const getSingleIssue = async (req: Request, res: Response) => {
   try {
     const result = await issueService.getSignleIssueFromDB(id as string);
 
-    if (result.rows.length === 0) {
+    if (result.length === 0) {
       sendResponse(res, {
         statusCode: 404,
         success: false,
@@ -78,7 +78,7 @@ const getSingleIssue = async (req: Request, res: Response) => {
       statusCode: 200,
       success: true,
       message: 'Issue retrieved successfully',
-      data: result.rows[0],
+      data: result,
     });
   } catch (error: any) {
     sendResponse(res, {
@@ -91,8 +91,10 @@ const getSingleIssue = async (req: Request, res: Response) => {
 };
 
 const updateIssue = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
   try {
-    const result = await issueService.updateIssueFromDB(req.body);
+    const result = await issueService.updateIssueFromDB(req.body, id as string);
 
     // if (result.rows.length === 0) {
     //   sendResponse(res, {

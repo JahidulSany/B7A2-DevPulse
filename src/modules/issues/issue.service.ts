@@ -79,10 +79,36 @@ const getAllIssuesFromDB = async (payload: IQueryParams) => {
 
 const getSignleIssueFromDB = async (id: string) => {
   const result = await pool.query(`SELECT * FROM issues WHERE id = $1`, [id]);
-  return result;
+
+  const issue = result.rows[0];
+
+  const filteredIssues = [];
+
+  const userResult = await pool.query(
+    `SELECT id, name, role FROM users WHERE id = $1`,
+    [issue.reporter_id],
+  );
+
+  // console.log(userResult);
+
+  const reporterData = userResult.rows.length > 0 ? userResult.rows[0] : null;
+
+  const formattedIssue = {
+    id: issue.id,
+    title: issue.title,
+    description: issue.description,
+    type: issue.type,
+    status: issue.status,
+    reporter: reporterData,
+    created_at: issue.created_at,
+    updated_at: issue.updated_at,
+  };
+
+  filteredIssues.push(formattedIssue);
+  return filteredIssues;
 };
 
-const updateIssueFromDB = async (payload: any) => {};
+const updateIssueFromDB = async (payload: IIssue, id: string) => {};
 
 const deleteIssueFromDB = async (payload: any) => {};
 
