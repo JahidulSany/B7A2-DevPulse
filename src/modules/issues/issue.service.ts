@@ -127,8 +127,6 @@ const updateIssueFromDB = async (
 
   const issue = issueData.rows[0];
 
-  console.log(issue)
-
   if (userRole === 'maintainer') {
   } else if (userRole === 'contributor') {
     if (String(issue.reporter_id) !== String(userId)) {
@@ -152,10 +150,27 @@ const updateIssueFromDB = async (
     [title, description, type, updated_time, id],
   );
 
-  return result.rows[0];
+  return result;
 };
 
-const deleteIssueFromDB = async (payload: any) => {};
+const deleteIssueFromDB = async (userRole: TUserRole, id: string) => {
+  if (userRole === 'maintainer') {
+  } else {
+    throw new Error('Unauthorized Role Access');
+  }
+  const result = await pool.query(
+    `
+      DELETE FROM issues WHERE id = $1 RETURNING *
+    `,
+    [id],
+  );
+
+  if (!result.rows[0]) {
+    throw new Error('Issue is not found or deleted already');
+  }
+
+  return result.rows[0];
+};
 
 export const issueService = {
   createIssueIntoDB,

@@ -101,7 +101,7 @@ const updateIssue = async (req: Request, res: Response) => {
       userRole,
     );
 
-    if (result.length === 0) {
+    if (result.rows.length === 0) {
       sendResponse(res, {
         statusCode: 404,
         success: false,
@@ -127,17 +127,19 @@ const updateIssue = async (req: Request, res: Response) => {
 };
 
 const deleteIssue = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { role: userRole } = req.user as JwtPayload;
   try {
-    const result = await issueService.deleteIssueFromDB(req.body);
+    const result = await issueService.deleteIssueFromDB(userRole, id as string);
 
-    // if (result.rows.length === 0) {
-    //   sendResponse(res, {
-    //     statusCode: 404,
-    //     success: false,
-    //     message: 'No issues found',
-    //     data: {},
-    //   });
-    // }
+    if (result.length === 0) {
+      sendResponse(res, {
+        statusCode: 404,
+        success: false,
+        message: 'No issues found',
+        data: {},
+      });
+    }
 
     sendResponse(res, {
       statusCode: 200,
