@@ -29,7 +29,7 @@ Internal Tech Issue &amp; Feature Tracker -- A collaborative platform for softwa
 - `GET /api/issues` - Fetch all system tickets with live sorting and query filters
 - `GET /api/issues/:id` - Extract complete target details for a single issue tracking ID
 - `PATCH /api/issues/:id` - Update title or data _(Maintainer or owning Contributor)_
-- `DELETE /api/issues/:id` - Permanently clear a tracked ticket from the ledger _(Maintainer only)_
+- `DELETE /api/issues/:id` - Permanently clear a issue _(Maintainer only)_
 
 ## 🚀 Getting Started
 
