@@ -1,4 +1,5 @@
 import { pool } from '../../db';
+import type { TUserRole } from '../../types';
 import type { IIssue, IQueryParams } from './issue.interface';
 
 const createIssueIntoDB = async (payload: IIssue, id: string) => {
@@ -77,7 +78,7 @@ const getAllIssuesFromDB = async (payload: IQueryParams) => {
   return filteredIssues;
 };
 
-const getSignleIssueFromDB = async (id: string) => {
+const getSingleIssueFromDB = async (id: string) => {
   const result = await pool.query(`SELECT * FROM issues WHERE id = $1`, [id]);
 
   const issue = result.rows[0];
@@ -108,14 +109,58 @@ const getSignleIssueFromDB = async (id: string) => {
   return filteredIssues;
 };
 
-const updateIssueFromDB = async (payload: IIssue, id: string) => {};
+const updateIssueFromDB = async (
+  payload: IIssue,
+  id: string,
+  userId: string,
+  userRole: TUserRole,
+) => {
+  const { title, description, type } = payload;
+
+  const issueData = await pool.query(`SELECT * FROM issues WHERE id = $1`, [
+    id,
+  ]);
+
+  if (issueData.rows.length === 0) {
+    throw new Error('Issue not found');
+  }
+
+  const issue = issueData.rows[0];
+
+  console.log(issue)
+
+  if (userRole === 'maintainer') {
+  } else if (userRole === 'contributor') {
+    if (String(issue.reporter_id) !== String(userId)) {
+      throw new Error("Forbidden. You cannot update someone else's issue.");
+    }
+
+    if (issue.status !== 'open') {
+      throw new Error('Forbidden. Contributors can only update open issues.');
+    }
+  } else {
+    throw new Error('Unauthorized role access.');
+  }
+
+  const updated_time = new Date().toISOString();
+
+  const result = await pool.query(
+    `
+    UPDATE issues
+    SET title = COALESCE($1, title), description = COALESCE($2, description), type = COALESCE($3, type), updated_at = $4 WHERE id = $5 RETURNING *
+  `,
+    [title, description, type, updated_time, id],
+  );
+
+  return result.rows[0];
+};
 
 const deleteIssueFromDB = async (payload: any) => {};
 
 export const issueService = {
   createIssueIntoDB,
   getAllIssuesFromDB,
-  getSignleIssueFromDB,
+  getSingleIssueFromDB,
   updateIssueFromDB,
   deleteIssueFromDB,
 };

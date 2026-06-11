@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express';
-import { issueService } from './issue.service';
-import sendResponse from '../../utils/sendResponse';
 import type { JwtPayload } from 'jsonwebtoken';
+import sendResponse from '../../utils/sendResponse';
+import { issueService } from './issue.service';
 
 const createIssue = async (req: Request, res: Response) => {
   // console.log(req.user);
@@ -63,7 +63,7 @@ const getAllIssues = async (req: Request, res: Response) => {
 const getSingleIssue = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
-    const result = await issueService.getSignleIssueFromDB(id as string);
+    const result = await issueService.getSingleIssueFromDB(id as string);
 
     if (result.length === 0) {
       sendResponse(res, {
@@ -92,18 +92,23 @@ const getSingleIssue = async (req: Request, res: Response) => {
 
 const updateIssue = async (req: Request, res: Response) => {
   const { id } = req.params;
-
+  const { id: userId, role: userRole } = req.user as JwtPayload;
   try {
-    const result = await issueService.updateIssueFromDB(req.body, id as string);
+    const result = await issueService.updateIssueFromDB(
+      req.body,
+      id as string,
+      userId,
+      userRole,
+    );
 
-    // if (result.rows.length === 0) {
-    //   sendResponse(res, {
-    //     statusCode: 404,
-    //     success: false,
-    //     message: 'No issues found',
-    //     data: {},
-    //   });
-    // }
+    if (result.length === 0) {
+      sendResponse(res, {
+        statusCode: 404,
+        success: false,
+        message: 'No issues found',
+        data: {},
+      });
+    }
 
     sendResponse(res, {
       statusCode: 200,
