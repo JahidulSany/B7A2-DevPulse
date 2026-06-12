@@ -6,7 +6,7 @@ Internal Tech Issue &amp; Feature Tracker -- A collaborative platform for softwa
 
 - **Language:** TypeScript (100%)
 - **Runtime Environment:** Node.js
-- **Database Operations:** High-performance Raw SQL Queries
+- **Database Operations:** High-performance Raw SQL Queries using pg and NeonDB
 - **Authentication:** JSON Web Tokens (JWT)
 
 ## ✨ Key Features
@@ -26,7 +26,7 @@ Internal Tech Issue &amp; Feature Tracker -- A collaborative platform for softwa
 ### 🎫 Issues
 
 - `POST /api/issues` - Log a new bug report or product feature request _(Authenticated)_
-- `GET /api/issues` - Fetch all system tickets with live sorting and query filters
+- `GET /api/issues` - Fetch all system issues with live sorting and query filters
 - `GET /api/issues/:id` - Extract complete target details for a single issue tracking ID
 - `PATCH /api/issues/:id` - Update title or data _(Maintainer or owning Contributor)_
 - `DELETE /api/issues/:id` - Permanently clear a issue _(Maintainer only)_
@@ -71,9 +71,9 @@ Make sure you have [Node.js](https://nodejs.org) installed along with your targe
 
 This software project is open-source and officially distributed under the [MIT License](LICENSE).
 
-👨‍💻 Author
+## 👨‍💻 Author
 
-Jahidul Sany AI-Driven Software Developer based in England, UK
+Jahidul Sany AI-Driven Software Developer based in Northampton, England, UK
 
 📧 Email: jahidulsanypro@gmail.com
 

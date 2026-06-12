@@ -16,7 +16,7 @@ const userSignup = async (req: Request, res: Response) => {
       statusCode: 500,
       success: false,
       message: error.message,
-      error: error,
+      errors: error,
     });
   }
 };
@@ -35,7 +35,7 @@ const userLogin = async (req: Request, res: Response) => {
       statusCode: 500,
       success: false,
       message: error.message,
-      error: error,
+      errors: error,
     });
   }
 };

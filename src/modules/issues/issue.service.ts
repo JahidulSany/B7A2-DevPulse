@@ -158,6 +158,7 @@ const deleteIssueFromDB = async (userRole: TUserRole, id: string) => {
   } else {
     throw new Error('Unauthorized Role Access');
   }
+  
   const result = await pool.query(
     `
       DELETE FROM issues WHERE id = $1 RETURNING *

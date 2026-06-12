@@ -1,10 +1,11 @@
+import cors from 'cors';
 import express, {
   urlencoded,
   type Application,
   type Request,
   type Response,
 } from 'express';
-import cors from 'cors';
+import globalErrorHandler from './middlewares/globalErrorHandler';
 import { authRoute } from './modules/auth/auth.route';
 import { issueRoute } from './modules/issues/issue.route';
 
@@ -31,6 +32,10 @@ app.get('/', (req: Request, res: Response) => {
 app.use('/api/auth', authRoute);
 
 // Issue Route
-app.use('/api/issues', issueRoute)
+app.use('/api/issues', issueRoute);
+
+// Global Error Handler Middleware
+
+app.use(globalErrorHandler);
 
 export default app;
