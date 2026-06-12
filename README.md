@@ -62,9 +62,13 @@ Make sure you have [Node.js](https://nodejs.org) installed along with your targe
    ```
 
 4. **Compile and Run the Server:**
+
    ```bash
+   # Build the TypeScript files
+   npm run build
+
    # Start the application
-   npm run dev
+   npm start
    ```
 
 ## 📄 License

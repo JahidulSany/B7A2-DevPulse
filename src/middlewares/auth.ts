@@ -1,9 +1,9 @@
 import type { NextFunction, Request, Response } from 'express';
-import sendResponse from '../utils/sendResponse';
+import sendResponse from '../utils/sendResponse.ts';
 import jwt, { type JwtPayload } from 'jsonwebtoken';
-import config from '../config';
-import { pool } from '../db';
-import type { TUserRole } from '../types';
+import config from '../config/index.ts';
+import { pool } from '../db/index.ts';
+import type { TUserRole } from '../types/index.ts';
 
 const auth = (...roles: TUserRole[]) => {
   return async (req: Request, res: Response, next: NextFunction) => {

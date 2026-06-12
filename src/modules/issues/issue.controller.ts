@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express';
 import type { JwtPayload } from 'jsonwebtoken';
-import sendResponse from '../../utils/sendResponse';
-import { issueService } from './issue.service';
+import sendResponse from '../../utils/sendResponse.ts';
+import { issueService } from './issue.service.ts';
 
 const createIssue = async (req: Request, res: Response) => {
   // console.log(req.user);

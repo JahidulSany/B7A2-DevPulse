@@ -1,8 +1,8 @@
 import bcrypt from 'bcryptjs';
-import { pool } from '../../db';
-import type { IAuthUser, IUserLogin } from './auth.interface';
+import { pool } from '../../db/index.ts';
+import type { IAuthUser, IUserLogin } from './auth.interface.ts';
 import jwt from 'jsonwebtoken';
-import config from '../../config';
+import config from '../../config/index.ts';
 
 const createUserAuthIntoDB = async (payload: IAuthUser) => {
   const { name, email, password, role } = payload;

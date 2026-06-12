@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { issueController } from './issue.controller';
-import auth from '../../middlewares/auth';
-import { User_Role } from '../../types';
+import { issueController } from './issue.controller.ts';
+import auth from '../../middlewares/auth.ts';
+import { User_Role } from '../../types/index.ts';
 
 const router = Router();
 

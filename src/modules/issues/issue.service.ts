@@ -1,6 +1,6 @@
-import { pool } from '../../db';
-import type { TUserRole } from '../../types';
-import type { IIssue, IQueryParams } from './issue.interface';
+import { pool } from '../../db/index.ts';
+import type { TUserRole } from '../../types/index.ts';
+import type { IIssue, IQueryParams } from './issue.interface.ts';
 
 const createIssueIntoDB = async (payload: IIssue, id: string) => {
   const { title, description, type, status } = payload;
